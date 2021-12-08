@@ -23,5 +23,4 @@ public class DieRoll {
     }
     System.out.println(min + "/" + max);
   }
-
 }
