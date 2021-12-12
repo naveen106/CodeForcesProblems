@@ -1,49 +1,49 @@
 package BLevelProblem;
-
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 //https://codeforces.com/contest/102/problem/B
 public class SumOfDigits {
- // static int sum;
-  static int numberOfSpells(int n){
-    int sum;
+   public static void main(String[] args){
+//
+//     Scanner input = new Scanner(System.in);
+//     String s = input.next();
+//     int sum=0;
+//
+//     for(int i=0;i<s.length();i++)
+//       sum+=s.charAt(i)-'0';
+//
+//     if(s.length()==1){
+//       System.out.println(0);
+//       return;
+//     }
+//
+//     int a=0;
+//     int count=1;
+//
+//     for(int i=0;sum>=10;i++){
+//       while(sum!=0){
+//         a+=sum%10;
+//         sum/=10;
+//       }
+//       sum=a;
+//       a=0;
+//       count++;
+//     }
+//     System.out.println(count);
 
-    if(n<10)
-    return n;
+     Scanner input = new Scanner(System.in);
+     char[] charArr = input.next().trim().toCharArray();
 
-    sum = (n % 10) + numberOfSpells(n/10);
-    return sum;
-  }
+     int result = 0;
+     //while resulting sum is not of length 1, length of array is also not 1,
+     while(charArr.length > 1) {
+       int sum = 0;
+       for(char c : charArr)
+         sum += c - '0';
+       charArr = Integer.toString(sum).toCharArray(); //new elements(digits of resulting 'sum') added to charArr.
+       result++;  //number of spells
+     }
 
-  public static void main(String[] args){
-    Scanner input = new Scanner(System.in);
-    int n = 0;
-    try {
-      n = input.nextInt();
-    }
-
-    catch(InputMismatchException e){
-      System.out.println(2);
-      return;
-    }
-
-    int count = 0;
-
-
-    if(n <= 9){
-      System.out.println(0);
-      return;
-    }
-
-    while(true){
-       n = numberOfSpells(n);
-       count++;
-
-       if(n<=9)
-         break;
-    }
-
-    System.out.println(count);
+   System.out.println(result);
   }
 }
