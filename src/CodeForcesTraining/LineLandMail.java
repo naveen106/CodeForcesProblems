@@ -12,7 +12,6 @@ public class LineLandMail {
     arr[i] = input.nextInt();
 
     int finalMin, finalMax;
-
     for(int i = 0; i<n; i++){
         int min1 = Integer.MAX_VALUE;
 
