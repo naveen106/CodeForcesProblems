@@ -8,28 +8,10 @@ public class LongestUncommonSubsequence {
     String str1 = input.next();
     String str2 = input.next();
 
-    if(str1.equals(str2)) {
+    if (str1.equals(str2)) {
       System.out.println(-1);
       return;
     }
-
-   // int i = 0, j = 0, len = 0;
-//
-//    while(i<str1.length() && j<str2.length()){
-//
-//      if(str1.charAt(i) != str2.charAt(j));
-//      len++;
-//
-//    }
-
-
-
-
-
-
-
-
-
-
+    System.out.println(Math.max(str1.length(), str2.length()));
   }
 }
