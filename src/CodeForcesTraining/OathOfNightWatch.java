@@ -2,7 +2,7 @@ package CodeForcesTraining;
 //https://codeforces.com/contest/768/problem/A
 import java.util.*;
 
-//I don't know why the code isn't working in IDE, while it's showing 'Accepted' in codeforces.
+//I don't know why the code isn't working in IDE (even with using 'long' datatype instead of int), while it's showing 'Accepted' in codeforces.
 
 
 public class OathOfNightWatch {
