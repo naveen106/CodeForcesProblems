@@ -24,5 +24,8 @@ public class SnackTower {
 
         System.out.println();
       }
+
+      // what I learned from this problem - I can create a visited[] array to keep track of elements and use it to move
+        // further in my approach.
     }
 }
