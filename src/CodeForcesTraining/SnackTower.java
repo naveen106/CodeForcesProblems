@@ -3,43 +3,26 @@ package CodeForcesTraining;
 import java.util.*;
 
 public class SnackTower {
-  public static void main(String[] args) {
-    Scanner input = new Scanner(System.in);
-    int n = input.nextInt();
-    int[]arr = new int[n];
+      public static void main(String[] args) {
+      //TODO code application logic here
 
-    for(int i = 0; i<n; i++)
-      arr[i] = input.nextInt();
+      Scanner input = new Scanner(System.in);
+      int n = input.nextInt();
+      int[] snack = new int[n+1];
 
-    int count = n;
-    int i;
-    int temp = -1, temp2=0;
-//    boolean nextline = false;
+      for (int i = 1; i <= n; i++)
+        snack[i] = input.nextInt();
 
-    for(i = 0; i<count; i++){
-      if(i == count-1)
-        break;
-      if(arr[i] == n){
-        if(temp == -1) //storing index of biggest snack
-        temp = i;
+      boolean[] visited = new boolean[n + 1];
+      int count = n;
 
-        System.out.print(n-- + " ");
-        temp2 = n;
+      for (int i = 1; i <= n; i++) {
+        visited[snack[i]] = true;
 
-        if(i != 0 && arr[i+1] != n)
-        i = i-2;
-      }
-      else if(n==0)
-        break;
+        while(visited[count] && count>0)
+        System.out.print(count-- +" ");
 
-      else {
         System.out.println();
       }
     }
-
-    for(i = 0; temp2 >= 1; i++) {
-      System.out.print(temp2-- + " ");
-    }
-
-  }
 }
