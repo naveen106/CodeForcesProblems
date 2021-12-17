@@ -6,32 +6,37 @@ public class ValeraAndX {
     Scanner input = new Scanner(System.in);
     int n = input.nextInt();
 
-    ArrayList<String> arr = new ArrayList<>();
-    for(int i = 0; i<n; i++){
-      arr.add(input.next());
-    }
+    String arr[] = new String[n+1];
+
+    for(int i = 1; i<=n; i++)
+      arr[i] = input.next();
+
     HashSet<Character> set = new HashSet<>();
     int count = 0;
-    int flag = 0;
-    for(int i = 0; i<n; i++){
+    for(int i = 1; i<arr.length; i++){
 
-        if(arr.get(i).charAt((n-1)-i) != arr.get(0).charAt(0)) {
-          System.out.println("NO");
+        if(arr[i].charAt(n-i) != arr[1].charAt(0)) {
+          System.out.println("NO");          
           return;
         }
         else {
-          count++;
-          flag = 1;
+          count+=2;
         }
+
        for(int j = 0; j<n; j++){
-         if(flag == 0 && arr.get(i).charAt(j) == arr.get(0).charAt(0))
+         if(j==i-1 && arr[i].charAt(j) != arr[1].charAt(0)) {
+           System.out.println("NO");
+           return;
+         }
+
+         if(j != i-1 && j!= n-i && arr[i].charAt(j) == arr[1].charAt(0))
          count++;
-         flag = 0;
-         set.add(arr.get(i).charAt(j));
+
+         set.add(arr[i].charAt(j));
        }
 
     }
-    if(set.size() != 2 || count >= n*2) {
+    if(set.size() != 2 || count-1 >= n*2) {
       System.out.println("NO");
       return;
     }
