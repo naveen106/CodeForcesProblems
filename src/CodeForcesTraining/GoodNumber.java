@@ -8,23 +8,31 @@ public class GoodNumber {
     int result=0;
 
     while(n-- > 0){
-      int temp = input.nextInt();
-      if(Integer.toString(temp).length() < k+1)
+      boolean[] arr = new boolean[k+1];
+      int num = input.nextInt();
+
+      if(Integer.toString(num).length() < k+1)
       continue;
 
-      int sum = k*(k+1)/2;
-      int tempSum = 0;
+//      if(k==0 && num%10 == 0) {
+//        result++;
+//        continue;
+//      }
 
-      while(temp!=0){
-        int rem = temp%10;
-        tempSum+=rem;
-        temp = temp/10;
+      while(num != 0){
+        if(num%10 < k+1)
+        arr[num%10] = true;
+        num = num/10;
       }
-      if(n==1 && k == 0)
-        sum = 1;
-
-      if(tempSum == sum)
-        result++;
+      boolean flag = true;
+      for (Boolean aBoolean : arr) {
+        if (!aBoolean) {
+          flag = false;
+          break;
+        }
+      }
+      if(flag)
+      result++;
     }
     System.out.println(result);
   }
