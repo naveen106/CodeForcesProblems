@@ -54,7 +54,7 @@ public class KnapSack {
 //      System.out.println(list.size());
 //      for(int element: list)
 //        System.out.print(element + " ");
-//    }
+    }
   }
 }
 
