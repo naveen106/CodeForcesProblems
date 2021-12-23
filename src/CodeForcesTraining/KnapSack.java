@@ -9,8 +9,47 @@ public class KnapSack {
     while(t-- > 0){
 
       int n = input.nextInt();
-      int w = input.nextInt();
+      long w = input.nextLong();
       int[]arr = new int[n];
+      int min = Integer.MAX_VALUE;
+      long c = w/2;
+
+      for(int i=0; i<n;i++){
+        arr[i] = input.nextInt();
+        min = Math.min(min, arr[i]);
+      }
+
+      if(min <= w && min > c){
+        System.out.println(1);
+        int temp=0;
+        for(int i = 0; i<arr.length; i++){
+          if(arr[i] == min){
+            temp = i;
+            break;
+          }
+        }
+        System.out.println(++temp);
+        continue;
+      }
+
+      ArrayList<Integer> list = new ArrayList<>();
+
+      for(int i = 0; i<n && c>0; i++){
+        if(arr[i] <= c){
+          c-=arr[i];
+          list.add(i+1);
+        }
+      }
+
+      if(list.size() == 0) {
+        System.out.println(-1);
+        continue;
+      }
+
+      System.out.println(list.size());
+      for(int element : list)
+        System.out.print(element + " ");
+      System.out.println();
 //      int min = Integer.MAX_VALUE;
 //
 //      for(int i = 0; i<n; i++){
