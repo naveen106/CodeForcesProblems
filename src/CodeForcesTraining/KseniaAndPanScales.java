@@ -35,14 +35,5 @@ public class KseniaAndPanScales {
     else{
       if(str2.length() > numOfChars1 && str2.length() > numOfChars2){}
     }
-
-
-
-
-
-
-
-
-
   }
 }
