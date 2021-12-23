@@ -6,34 +6,52 @@ public class KseniaAndPanScales {
     Scanner input = new Scanner(System.in);
     StringBuilder str1 = new StringBuilder(input.next());
     StringBuilder str2 = new StringBuilder(input.next());
+    StringBuilder result = new StringBuilder();
 
-    int numOfChars1 = 0;
-    int numOfChars2 = 0;
+    int left = 0;
+    int right = 0;
 
     int i = 0;
-    while(str1.charAt(i) != '|') {
-      numOfChars1++;
+
+    while(str1.charAt(i) != '|'){
+      result.append(str1.charAt(i));
+      left++;
       i++;
     }
+    right =  str1.length()-1 - i;
 
-    while(++i<str1.length())
-      numOfChars2++;
-
-    if(numOfChars1 != 0)
-      numOfChars2 += str2.length();
-    else
-      numOfChars1 = str2.length();
-
-    if(numOfChars1 == numOfChars2){
-      if (numOfChars1 < str2.length() || str1.charAt(0) ==  '|')
-        System.out.println(str2.append(str1));
-      else
-        System.out.println(str1.append(str2));
+    if(left==0&&right==0 && (str2.length() & 1) == 0){
+      String temp = str2.substring(0,str2.length()/2) + "|" + str2.substring(str2.length()/2);
+      System.out.println(temp);
       return;
     }
 
-    else{
-      if(str2.length() > numOfChars1 && str2.length() > numOfChars2){}
+    result.append('|');
+
+    while(++i<str1.length()) {
+      result.append(str1.charAt(i));
     }
+
+    for(i=0;i<str2.length(); i++){
+      //if remaining length is not even.
+      if(left == right && ((str2.length()-i & 1) != 0)){
+        System.out.println("Impossible");
+        return;
+      }
+
+      if(left <= right) {
+        result.insert(0, str2.charAt(i));
+        left++;
+      }
+
+      else {
+        result.append(str2.charAt(i));
+        right++;
+      }
+    }
+    if(left != right)
+      System.out.println("Impossible");
+    else
+    System.out.println(result);
   }
 }
