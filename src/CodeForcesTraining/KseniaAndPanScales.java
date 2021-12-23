@@ -9,7 +9,7 @@ public class KseniaAndPanScales {
     StringBuilder result = new StringBuilder();
 
     int left = 0;
-    int right = 0;
+    int right;
 
     int i = 0;
 
@@ -28,13 +28,13 @@ public class KseniaAndPanScales {
 
     result.append('|');
 
-    while(++i<str1.length()) {
+    while(++i<str1.length())
       result.append(str1.charAt(i));
-    }
+
 
     for(i=0;i<str2.length(); i++){
       //if remaining length is not even.
-      if(left == right && ((str2.length()-i & 1) != 0)){
+      if(left == right && (str2.length()-i & 1) != 0){
         System.out.println("Impossible");
         return;
       }
