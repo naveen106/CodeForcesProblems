@@ -1,7 +1,6 @@
 package CLevelProbsDiv2_3;
-
+//https://codeforces.com/contest/1613/problem/C
 import java.io.*;
-import java.util.*;
 
 public class PoisonedDagger {
   public static void main(String[] args) {
@@ -11,84 +10,21 @@ public class PoisonedDagger {
     while(t-- > 0){
       byte n = input.nextByte();
       long health = input.nextLong();
+      int arr[] = input.readArray(n);
+      long left = 0;
+      long right = health;
 
-      int min;
-      if (health % n == 0)
-        min = (int) health / n;
-      else
-        min = (int) health / n + 1;
-
-      long damage = 0;
-
-      int[] time = new int[n];
-
-      for (int i = 0; i < n; i++)
-        time[i] = input.nextInt();
-
-      int constIdx = 0;
-      long constDamage = 0;
-      for (int i = 1; i < n; i++) {
-        int temp = time[i] - time[i - 1];
-
-        if (temp > min) {
-          if (constIdx == 0)
-            constIdx = i-1;
-          if (constDamage == 0)
-            constDamage = damage;
-          damage += min;
-        } else
-          damage += temp;
-      }
-      damage += min;
-      min++;
-      while (damage < health) {
-        damage = constDamage;
-        for (int i = Math.max(constIdx,0); i < n; i++) {
-          if (i+1 < n && time[i+1]-time[i] > min)
-            damage += min;
-          else if(i+1 < n)
-            damage += time[i+1]-time[i];
+      while(left <= right){
+        long min = (left+right)/2;
+        long damage = min;
+        for(int i = 0; i<n-1; i++){
+          damage += Math.min(arr[i+1]-arr[i], min);
         }
-        damage += min;
-        min++;
+        if(damage < health) left = min + 1 ;
+        else right = min - 1;
       }
-      if(health <= n)
-        System.out.println(1);
-      else
-      System.out.println(--min);
+      out.println(left);
     }
-  }
-
-  static class FastScanner {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    StringTokenizer st = new StringTokenizer("");
-
-    String next() {
-      while (!st.hasMoreTokens())
-        try {
-          st = new StringTokenizer(br.readLine());
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      return st.nextToken();
-    }
-
-    int nextInt() {
-      return Integer.parseInt(next());
-    }
-
-    int[] readArray(int n) {
-      int[] a = new int[n];
-      for (int i = 0; i < n; i++) a[i] = nextInt();
-      return a;
-    }
-
-    byte nextByte() {
-      return Byte.parseByte(next());
-    }
-
-    long nextLong() {
-      return Long.parseLong(next());
-    }
+    out.close();
   }
 }
