@@ -3,14 +3,15 @@ import java.io.*;
 
 public class CFsolve {
   public static void main(String[] args) {
-
+    PrintWriter out = new PrintWriter(System.out);
     FastScanner input = new FastScanner();
     //WRITE YOUR CODE HERE // use - out.println() or out.print() to print. //
     int t = input.nextInt();
-
     while(t-- > 0){
 
+
     }
+    out.close();
   }
 
   static class FastScanner {
