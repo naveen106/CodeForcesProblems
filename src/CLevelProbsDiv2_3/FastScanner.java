@@ -1,7 +1,6 @@
 package CLevelProbsDiv2_3;
 import java.util.*;
 import java.io.*;
-
 public class FastScanner {
     BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
     StringTokenizer st=new StringTokenizer("");
