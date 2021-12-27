@@ -5,55 +5,60 @@ public class CFsolve {
   public static void main(String[] args) {
     FastScanner input = new FastScanner();
     PrintWriter out = new PrintWriter(System.out);
-    String[]arr = new String[4];
-
-    for(int i = 0; i<4; i++)
-      arr[i] = input.next();
-
-    int rows=0;
-    String answer = "NO";
-    while(rows != 3){
-      for(int i = 0; i<3; i++){
-        String s = arr[i].substring(i, i + 2);
-        boolean b = s.equals(".#") || s.equals("#.");
-        boolean c = arr[i+1].startsWith(".#", i) || arr[i+1].startsWith("#.", i);
-
-        if(s.equals("##") && c){
-        answer = "YES";
+    int t = input.nextInt();
+    while(t-- > 0){
+      int n = input.nextInt();
+      int[]arr = input.readArray(n);
+      String str = input.next();
+      sort(arr);
+      int[]result = new int[n];
+      int start = 0;
+      int end = n-1;
+      for(int i = 0; i<arr.length; i++){
+        if(str.charAt(i) == '0'){
+          result[i] = arr[start];
+          arr[start] = 0;
+          start++;
         }
-        if(arr[i+1].startsWith("##", i) && b){
-          answer = "YES";
-        }
-        if(s.equals("##") && c){
-          answer = "YES";
-        }
-        if(arr[i+1].startsWith("##", i) && s.equals(".#") || s.equals("#.")){
-          answer = "YES";
-        }
-
-        if(s.equals("..")){
-          if(c || b)
-          answer = "YES";
-        }
-
-        if(arr[i+1].startsWith("..", i)){
-          answer = "YES";
-        }
-        if(s.equals("..") && arr[i+1].startsWith(".#", i) || arr[i+1].startsWith("#.", i)){
-          answer = "YES";
-        }
-        if(arr[i+1].startsWith("..", i) && s.equals(".#") || s.equals("#.")){
-          answer = "YES";
+        else {
+          result[i] = arr[end];
+          arr[end] = 0;
+          end--;
         }
       }
-      rows++;
+
+      for(int i : result)
+        out.print(i+" ");
+      out.println();
     }
-
-    out.println(answer);
     out.close();
+  }
 
+  static int LCM(int a, int b, int gcd){
+    return a/gcd * b;
+  }
 
+  static int gcd(int a,int b){
+    while(b>0){
+      a%=b;
+      a=a^b;
+      b=a^b;
+      a=a^b;
+    }
+    return a;
+  }
 
+  static void swap(int a, int b){
+    a = a^b;
+    b = a^b;
+    a = a^b;
+  }
+
+  static void sort(int[] a) {
+    ArrayList<Integer> l=new ArrayList<>();
+    for (int i:a) l.add(i);
+    Collections.sort(l);
+    for (int i=0; i<a.length; i++) a[i]=l.get(i);
   }
 
   static class FastScanner {
