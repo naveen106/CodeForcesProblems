@@ -9,26 +9,35 @@ public class CFsolve {
     while(t-- > 0){
       int n = input.nextInt();
       int[]arr = input.readArray(n);
-      String str = input.next();
-      sort(arr);
-      int[]result = new int[n];
-      int start = 0;
-      int end = n-1;
-      for(int i = 0; i<arr.length; i++){
-        if(str.charAt(i) == '0'){
-          result[i] = arr[start];
-          arr[start] = 0;
-          start++;
-        }
-        else {
-          result[i] = arr[end];
-          arr[end] = 0;
-          end--;
-        }
+      HashMap<Integer,Integer> map = new HashMap<>();
+      for(int i = 0; i<n; i++) {
+        map.put(arr[i], i);
       }
 
-      for(int i : result)
-        out.print(i+" ");
+      String str = input.next();
+      ArrayList<Integer>disliked = new ArrayList<>();
+      ArrayList<Integer>liked = new ArrayList<>();
+      int[]answer = new int[n];
+
+      for(int i = 0; i<n; i++){
+        if(str.charAt(i) == '0'){
+          disliked.add(arr[i]);
+        }
+        else
+          liked.add(arr[i]);
+      }
+      Collections.sort(liked);
+      Collections.sort(disliked);
+
+      int i = 0;
+      for(i = 0; i<disliked.size(); i++) {
+        answer[map.get(disliked.get(i))] = i + 1;
+      }
+      for(int j = 0; j<liked.size(); j++){
+        answer[map.get(liked.get(j))] = ++i;
+      }
+      for(int element : answer)
+        out.print(element + " ");
       out.println();
     }
     out.close();
