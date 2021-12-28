@@ -5,43 +5,60 @@ public class CFsolve {
   public static void main(String[] args) {
     FastScanner input = new FastScanner();
     PrintWriter out = new PrintWriter(System.out);
-    int t = input.nextInt();
-    while(t-- > 0){
-      int n = input.nextInt();
-      int[]arr = input.readArray(n);
-      HashMap<Integer,Integer> map = new HashMap<>();
-      for(int i = 0; i<n; i++) {
-        map.put(arr[i], i);
-      }
-
-      String str = input.next();
-      ArrayList<Integer>disliked = new ArrayList<>();
-      ArrayList<Integer>liked = new ArrayList<>();
-      int[]answer = new int[n];
-
-      for(int i = 0; i<n; i++){
-        if(str.charAt(i) == '0'){
-          disliked.add(arr[i]);
-        }
-        else
-          liked.add(arr[i]);
-      }
-      Collections.sort(liked);
-      Collections.sort(disliked);
-
-      int i = 0;
-      for(i = 0; i<disliked.size(); i++) {
-        answer[map.get(disliked.get(i))] = i + 1;
-      }
-      for(int j = 0; j<liked.size(); j++){
-        answer[map.get(liked.get(j))] = ++i;
-      }
-      for(int element : answer)
-        out.print(element + " ");
-      out.println();
-    }
+    String str = input.next();
+    String[] output = getCode(str);
+   // possibleCodes(str);
+    for(String i : output)
+      out.println(i);
     out.close();
   }
+//  static void possibleCodes(String str){
+//    if(str.length() == 0)
+//      return;
+//    int a = str.charAt(0)-'0';
+//
+//    System.out.print((char)(a + 96));
+//    possibleCodes(str.substring(1));
+//    System.out.print((char)(96+a));
+//
+//  }
+
+  public static char getChar(int n){
+    return (char)(n + 96);
+  }
+
+  public static String[] getCode(String str){
+    if (str.length() == 0)
+    return new String[]{""};
+
+    String[] output1 = getCode(str.substring(1));
+    String[] output2 = new String[0];
+    int firstDigit = (str.charAt(0) - '0');
+    int firstTwoDigit = 0;
+
+    if (str.length() >= 2) {
+      firstTwoDigit = (str.charAt(0) - '0') * 10 + (str.charAt(1) - '0');
+
+      if (firstTwoDigit <= 26)
+        output2 = getCode(str.substring(2));
+    }
+
+    String[] output = new String[output1.length + output2.length];
+    int k = 0;
+    for (int i = 0; i < output1.length; i++) {
+      char ch = getChar(firstDigit);
+      output[i] = ch + output1[i];
+      k++;
+    }
+
+    for (String s : output2) {
+      char ch = getChar(firstTwoDigit);
+      output[k] = ch + s;
+      k++;
+    }
+    return output;
+  }
+
 
   static int LCM(int a, int b, int gcd){
     return a/gcd * b;
