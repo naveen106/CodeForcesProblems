@@ -4,7 +4,7 @@ import java.io.*;
 public class FastScanner {
     BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
     StringTokenizer st=new StringTokenizer("");
-    String next() {
+    public String next() {
       while (!st.hasMoreTokens())
         try {
           st=new StringTokenizer(br.readLine());
@@ -14,10 +14,10 @@ public class FastScanner {
       return st.nextToken();
     }
 
-    int nextInt() {
+    public int nextInt() {
       return Integer.parseInt(next());
     }
-    int[] readArray(int n) {
+    public int[] readArray(int n) {
       int[] a=new int[n];
       for (int i=0; i<n; i++) a[i]=nextInt();
       return a;
