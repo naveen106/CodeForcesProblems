@@ -5,60 +5,36 @@ public class CFsolve {
   public static void main(String[] args) {
     FastScanner input = new FastScanner();
     PrintWriter out = new PrintWriter(System.out);
-    String str = input.next();
-    String[] output = getCode(str);
-   // possibleCodes(str);
-    for(String i : output)
-      out.println(i);
+    int t = input.nextInt();
+    while(t-- > 0){
+      int n = input.nextInt();
+      long k = input.nextLong();
+      int[]arr = new int[n];
+      sort(arr);
+      int[]summation = new int[n];
+      summation[0] = arr[0];
+
+      for(int i = 1; i<arr.length; i++){
+        summation[i] = arr[i]+arr[i-1];
+      }
+
+      int maxSteps = (int)(summation[n-1]-k);
+
+      int count = 0;
+      for(int i=1;i<arr.length; i++){
+        count++;
+        int sum = (int)(k-summation[i] - summation[0]);
+        int x = sum/(count+1);
+
+
+      }
+
+
+
+
+    }
     out.close();
   }
-//  static void possibleCodes(String str){
-//    if(str.length() == 0)
-//      return;
-//    int a = str.charAt(0)-'0';
-//
-//    System.out.print((char)(a + 96));
-//    possibleCodes(str.substring(1));
-//    System.out.print((char)(96+a));
-//
-//  }
-
-  public static char getChar(int n){
-    return (char)(n + 96);
-  }
-
-  public static String[] getCode(String str){
-    if (str.length() == 0)
-    return new String[]{""};
-
-    String[] output1 = getCode(str.substring(1));
-    String[] output2 = new String[0];
-    int firstDigit = (str.charAt(0) - '0');
-    int firstTwoDigit = 0;
-
-    if (str.length() >= 2) {
-      firstTwoDigit = (str.charAt(0) - '0') * 10 + (str.charAt(1) - '0');
-
-      if (firstTwoDigit <= 26)
-        output2 = getCode(str.substring(2));
-    }
-
-    String[] output = new String[output1.length + output2.length];
-    int k = 0;
-    for (int i = 0; i < output1.length; i++) {
-      char ch = getChar(firstDigit);
-      output[i] = ch + output1[i];
-      k++;
-    }
-
-    for (String s : output2) {
-      char ch = getChar(firstTwoDigit);
-      output[k] = ch + s;
-      k++;
-    }
-    return output;
-  }
-
 
   static int LCM(int a, int b, int gcd){
     return a/gcd * b;
