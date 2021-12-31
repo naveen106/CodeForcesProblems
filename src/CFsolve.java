@@ -5,42 +5,82 @@ public class CFsolve {
   public static void main(String[] args) {
     FastScanner input = new FastScanner();
     PrintWriter out = new PrintWriter(System.out);
-    int t = input.nextInt();
-    while(t-- > 0){
-      int n = input.nextInt();
-      long k = input.nextLong();
-      int[]arr = new int[n];
-      sort(arr);
-      int[]summation = new int[n];
-      summation[0] = arr[0];
+    int n = input.nextInt();
+    Queue<Integer> q = new LinkedList<>();
+    HashSet<Integer>set = new HashSet<>();
 
-      for(int i = 1; i<arr.length; i++){
-        summation[i] = arr[i]+arr[i-1];
-      }
+    for(int i = 0; i<n; i++)
+      q.add(input.nextInt());
 
-      int maxSteps = (int)(summation[n-1]-k);
 
-      int count = 0;
-      for(int i=1;i<arr.length; i++){
+    int answer = 0;
+    int count = 0;
+    while(count<n){
+      int temp = input.nextInt();
+
+      if(set.contains(q.peek()))
+        q.poll();
+
+      if(set.contains(temp)){
         count++;
-        int sum = (int)(k-summation[i] - summation[0]);
-        int x = sum/(count+1);
-
-
+        continue;
       }
 
+      if(temp != q.peek()) {
+        answer++;
+        set.add(q.peek());
+        set.add(temp);
+      }
 
-
-
+      else if(temp == q.peek())
+        q.poll();
+      count++;
     }
+
+    out.println(answer);
     out.close();
   }
 
-  static int LCM(int a, int b, int gcd){
-    return a/gcd * b;
+  static int LCM(int a, int b){
+    return a/gcd(a,b) * b;
+  }
+  static long LCM(long a, long b){
+    return (a/gcd(a,b) * b);
+  }
+
+  static long pow(long a, long b) {
+    long res = 1;
+    while (b > 0) {
+      if ((b & 1)!=0)
+        res = res * a;
+      a = a * a;
+      b >>= 1;
+    }
+    return res;
+  }
+
+  static int pow(int a, int b) {
+    int res = 1;
+    while (b > 0) {
+      if ((b & 1)!=0)
+        res = res * a;
+      a = a * a;
+      b >>= 1;
+    }
+    return res;
   }
 
   static int gcd(int a,int b){
+    while(b>0){
+      a%=b;
+      a=a^b;
+      b=a^b;
+      a=a^b;
+    }
+    return a;
+  }
+
+  static long gcd(long a,long b){
     while(b>0){
       a%=b;
       a=a^b;
