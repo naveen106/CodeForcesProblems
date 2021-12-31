@@ -5,38 +5,16 @@
     public static void main(String[] args) {
       FastScanner input = new FastScanner();
       PrintWriter out = new PrintWriter(System.out);
-      int n = input.nextInt();
+      int[]arr = {2,3,5};
+      int n = 3;
+      int k = 2;
 
-      HashMap<Integer,Integer> map = new HashMap<>();
-      HashMap<Integer, Integer> reverseMap = new HashMap<>();
-
-      for(int i = 1; i<=n;i++){
-        int temp = input.nextInt();
-        map.put(i,temp);
-        reverseMap.put(temp,i);
+      int min = Integer.MAX_VALUE;
+      for(int i = 1; i<arr.length && k>=0; i++){
+        min = Math.min(arr[i]-arr[i-1],min);
+        k--;
       }
-
-      int count = 0;
-      int count2 = 0;
-      int i = 1;
-      while(count2<n){
-        int temp = input.nextInt();
-
-        if(map.containsKey(i) && map.containsValue(temp) && map.get(i) != temp){
-          count++;
-
-          if(map.containsValue(temp))
-          map.remove(reverseMap.get(temp));
-        }
-        else if(map.get(i) == temp){
-          map.remove(i);
-          while(map.size()!=0 && !map.containsKey(i) && i<n)
-          i++;
-        }
-        count2++;
-      }
-      out.println(count);
-      out.close();
+      System.out.println(min);
     }
 
     static int LCM(int a, int b){
