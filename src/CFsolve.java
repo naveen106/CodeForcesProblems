@@ -1,132 +1,130 @@
-import java.util.*;
-import java.io.*;
+  import java.util.*;
+  import java.io.*;
 
-public class CFsolve {
-  public static void main(String[] args) {
-    FastScanner input = new FastScanner();
-    PrintWriter out = new PrintWriter(System.out);
-    int n = input.nextInt();
-    Queue<Integer> q = new LinkedList<>();
-    HashSet<Integer>set = new HashSet<>();
+  public class CFsolve {
+    public static void main(String[] args) {
+      FastScanner input = new FastScanner();
+      PrintWriter out = new PrintWriter(System.out);
+      int n = input.nextInt();
 
-    for(int i = 0; i<n; i++)
-      q.add(input.nextInt());
+      HashMap<Integer,Integer> map = new HashMap<>();
 
-
-    int answer = 0;
-    int count = 0;
-    while(count<n){
-      int temp = input.nextInt();
-
-      if(set.contains(q.peek()))
-        q.poll();
-
-      if(set.contains(temp)){
-        count++;
-        continue;
+      for(int i = 1; i<=n;i++){
+        map.put(i,input.nextInt());
       }
 
-      if(temp != q.peek()) {
-        answer++;
-        set.add(q.peek());
-        set.add(temp);
-      }
+      HashMap<Integer, Integer> reverseMap = new HashMap<>();
+      map.forEach((key,value) -> reverseMap.put(value,key));
 
-      else if(temp == q.peek())
-        q.poll();
-      count++;
-    }
+      int count = 0;
+      int count2 = 0;
+      int i = 1;
+      while(count2<n){
+        int temp = input.nextInt();
 
-    out.println(answer);
-    out.close();
-  }
+        if(map.containsKey(i) && map.containsValue(temp) && map.get(i) != temp){
+          count++;
 
-  static int LCM(int a, int b){
-    return a/gcd(a,b) * b;
-  }
-  static long LCM(long a, long b){
-    return (a/gcd(a,b) * b);
-  }
-
-  static long pow(long a, long b) {
-    long res = 1;
-    while (b > 0) {
-      if ((b & 1)!=0)
-        res = res * a;
-      a = a * a;
-      b >>= 1;
-    }
-    return res;
-  }
-
-  static int pow(int a, int b) {
-    int res = 1;
-    while (b > 0) {
-      if ((b & 1)!=0)
-        res = res * a;
-      a = a * a;
-      b >>= 1;
-    }
-    return res;
-  }
-
-  static int gcd(int a,int b){
-    while(b>0){
-      a%=b;
-      a=a^b;
-      b=a^b;
-      a=a^b;
-    }
-    return a;
-  }
-
-  static long gcd(long a,long b){
-    while(b>0){
-      a%=b;
-      a=a^b;
-      b=a^b;
-      a=a^b;
-    }
-    return a;
-  }
-
-  static void swap(int a, int b){
-    a = a^b;
-    b = a^b;
-    a = a^b;
-  }
-
-  static void sort(int[] a) {
-    ArrayList<Integer> l=new ArrayList<>();
-    for (int i:a) l.add(i);
-    Collections.sort(l);
-    for (int i=0; i<a.length; i++) a[i]=l.get(i);
-  }
-
-  static class FastScanner {
-    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-    StringTokenizer st=new StringTokenizer("");
-    String next() {
-      while (!st.hasMoreTokens())
-        try {
-          st=new StringTokenizer(br.readLine());
-        } catch (IOException e) {
-          e.printStackTrace();
+          if(map.containsValue(temp))
+          map.values().remove(temp);
         }
-      return st.nextToken();
+        else if(map.get(i) == temp){
+          map.remove(i);
+          while(map.size()!=0 && !map.containsKey(i) && i<n)
+          i++;
+        }
+        count2++;
+      }
+      out.println(count);
+      out.close();
     }
 
-    int nextInt() {
-      return Integer.parseInt(next());
+    static int LCM(int a, int b){
+      return a/gcd(a,b) * b;
     }
-    int[] readArray(int n) {
-      int[] a=new int[n];
-      for (int i=0; i<n; i++) a[i]=nextInt();
+    static long LCM(long a, long b){
+      return (a/gcd(a,b) * b);
+    }
+
+    static long pow(long a, long b) {
+      long res = 1;
+      while (b > 0) {
+        if ((b & 1)!=0)
+          res = res * a;
+        a = a * a;
+        b >>= 1;
+      }
+      return res;
+    }
+
+    static int pow(int a, int b) {
+      int res = 1;
+      while (b > 0) {
+        if ((b & 1)!=0)
+          res = res * a;
+        a = a * a;
+        b >>= 1;
+      }
+      return res;
+    }
+
+    static int gcd(int a,int b){
+      while(b>0){
+        a%=b;
+        a=a^b;
+        b=a^b;
+        a=a^b;
+      }
       return a;
     }
-    byte nextByte(){return Byte.parseByte(next());}
-    long nextLong() {
-      return Long.parseLong(next());
+
+    static long gcd(long a,long b){
+      while(b>0){
+        a%=b;
+        a=a^b;
+        b=a^b;
+        a=a^b;
+      }
+      return a;
+    }
+
+    static void swap(int a, int b){
+      a = a^b;
+      b = a^b;
+      a = a^b;
+    }
+
+    static void sort(int[] a) {
+      ArrayList<Integer> l=new ArrayList<>();
+      for (int i:a) l.add(i);
+      Collections.sort(l);
+      for (int i=0; i<a.length; i++) a[i]=l.get(i);
+    }
+
+    static class FastScanner {
+      BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+      StringTokenizer st=new StringTokenizer("");
+      String next() {
+        while (!st.hasMoreTokens())
+          try {
+            st=new StringTokenizer(br.readLine());
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        return st.nextToken();
+      }
+
+      int nextInt() {
+        return Integer.parseInt(next());
+      }
+      int[] readArray(int n) {
+        int[] a=new int[n];
+        for (int i=0; i<n; i++) a[i]=nextInt();
+        return a;
+      }
+      byte nextByte(){return Byte.parseByte(next());}
+      long nextLong() {
+        return Long.parseLong(next());
+      }
     }
   }
-}
