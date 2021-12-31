@@ -8,13 +8,13 @@
       int n = input.nextInt();
 
       HashMap<Integer,Integer> map = new HashMap<>();
+      HashMap<Integer, Integer> reverseMap = new HashMap<>();
 
       for(int i = 1; i<=n;i++){
-        map.put(i,input.nextInt());
+        int temp = input.nextInt();
+        map.put(i,temp);
+        reverseMap.put(temp,i);
       }
-
-      HashMap<Integer, Integer> reverseMap = new HashMap<>();
-      map.forEach((key,value) -> reverseMap.put(value,key));
 
       int count = 0;
       int count2 = 0;
@@ -26,7 +26,7 @@
           count++;
 
           if(map.containsValue(temp))
-          map.values().remove(temp);
+          map.remove(reverseMap.get(temp));
         }
         else if(map.get(i) == temp){
           map.remove(i);
