@@ -5,16 +5,58 @@
     public static void main(String[] args) {
       FastScanner input = new FastScanner();
       PrintWriter out = new PrintWriter(System.out);
-      int[]arr = {2,3,5};
-      int n = 3;
-      int k = 2;
+      int t = input.nextInt();
+      while(t-- > 0) {
+        int n = input.nextInt();
+        long[] arr = new long[n];
 
-      int min = Integer.MAX_VALUE;
-      for(int i = 1; i<arr.length && k>=0; i++){
-        min = Math.min(arr[i]-arr[i-1],min);
-        k--;
+        for (int i = 0; i < n; i++) {
+          arr[i] = input.nextLong();
+        }
+
+
+        if(n == 2){
+          if(arr[0] != arr[1]){
+            out.println(Math.max(arr[0],arr[1]));
+          }
+          else
+            out.println(0);
+          continue;
+        }
+
+ //       ArrayList<Long> list = new ArrayList<>();
+
+        long gcd = 0;
+        boolean check = false;
+        for (int i = 1; i < n; i+=2) {
+          long temp = 0;
+//          if((arr[i]&1) == 0 && (arr[i-1]&1) == 0){
+//            if(arr[i] == arr[i-1]) {
+//              out.println(0);
+//              check = true;
+//              break;
+//            }
+//          }
+//
+//          if((arr[i]&1) != 0 && (arr[i-1]&1) != 0){
+//            if(arr[i] == arr[i-1]) {
+//              out.println(0);
+//              check = true;
+//              break;
+//            }
+//          }
+          if(i+2 < n && arr[i]!=arr[i+1] || arr[i] != arr[i-1]) {
+            temp = gcd(arr[i], arr[i + 2]);
+            if (temp > gcd && arr[i] % temp != 0)
+              gcd = temp;
+            else if (arr[i]!=arr[i-1] || arr[i] != arr[i+1])
+              gcd = arr[i];
+          }
+        }
+        if(!check)
+        out.println(gcd);
       }
-      System.out.println(min);
+      out.close();
     }
 
     static int LCM(int a, int b){
