@@ -1,3 +1,4 @@
+
   import java.util.*;
   import java.io.*;
 
@@ -6,55 +7,39 @@
       FastScanner input = new FastScanner();
       PrintWriter out = new PrintWriter(System.out);
       int t = input.nextInt();
-      while(t-- > 0) {
+      while(t-- > 0){
         int n = input.nextInt();
-        long[] arr = new long[n];
+        ArrayList<Integer> list = new ArrayList<>();
+        HashMap<Integer,Integer> map = new HashMap<>();
 
-        for (int i = 0; i < n; i++) {
-          arr[i] = input.nextLong();
+        for(int i = 0; i<n; i++){
+          int key = input.nextInt();
+          list.add(key);
+          map.put(key, map.containsKey(key)? map.get(key)+1 : 1);
         }
+        int q = input.nextInt();
+        int count  = 0;
 
+        while(q-- > 0){
 
-        if(n == 2){
-          if(arr[0] != arr[1]){
-            out.println(Math.max(arr[0],arr[1]));
+          int ai = input.nextInt();
+          int step = input.nextInt();
+
+          while(step-- > 0 || count != n) {
+            for(Integer key : map.keySet()){
+              Collections.replaceAll(list,key,map.get(key));
+            }
+
+            for (int i = 0; i < n; i++) {
+              int key = list.get(i);
+              map.put(key, map.containsKey(key) ? map.get(key) + 1 : 1);
+              if (key == map.get(key))
+              count++;
+            }
           }
-          else
-            out.println(0);
-          continue;
+          out.println(list.get(ai));
         }
-
- //       ArrayList<Long> list = new ArrayList<>();
-
-        long gcd = 0;
-        boolean check = false;
-        for (int i = 1; i < n; i+=2) {
-          long temp = 0;
-//          if((arr[i]&1) == 0 && (arr[i-1]&1) == 0){
-//            if(arr[i] == arr[i-1]) {
-//              out.println(0);
-//              check = true;
-//              break;
-//            }
-//          }
-//
-//          if((arr[i]&1) != 0 && (arr[i-1]&1) != 0){
-//            if(arr[i] == arr[i-1]) {
-//              out.println(0);
-//              check = true;
-//              break;
-//            }
-//          }
-          if(i+2 < n && arr[i]!=arr[i+1] || arr[i] != arr[i-1]) {
-            temp = gcd(arr[i], arr[i + 2]);
-            if (temp > gcd && arr[i] % temp != 0)
-              gcd = temp;
-            else if (arr[i]!=arr[i-1] || arr[i] != arr[i+1])
-              gcd = arr[i];
-          }
-        }
-        if(!check)
-        out.println(gcd);
+      //  map.forEach((key,val) -> out.println(key + " : " + val));
       }
       out.close();
     }
