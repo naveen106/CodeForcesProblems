@@ -9,35 +9,50 @@
       int t = input.nextInt();
       while(t-- > 0){
         int n = input.nextInt();
-        ArrayList<Integer> list = new ArrayList<>();
+        int[][]arr = new int[n][n];
         HashMap<Integer,Integer> map = new HashMap<>();
-
         for(int i = 0; i<n; i++){
           int key = input.nextInt();
-          list.add(key);
+          arr[0][i] = key;
           map.put(key, map.containsKey(key)? map.get(key)+1 : 1);
         }
-        int q = input.nextInt();
-        int count  = 0;
 
+        int q = input.nextInt();
+        int count  = 1;
+        int times = 0;
         while(q-- > 0){
 
-          int ai = input.nextInt();
+          int ai = input.nextInt()-1;
           int step = input.nextInt();
+          int tempStep = step;
+          while(step-- > 0 && times < n && count < n){
 
-          while(step-- > 0 || count != n) {
-            for(Integer key : map.keySet()){
-              Collections.replaceAll(list,key,map.get(key));
+            if(arr.length >= step && arr[count][0] != 0){
+              if(arr[tempStep][ai] != 0)
+              System.out.println(arr[tempStep][ai]);
+              else
+                System.out.println(arr[step+1][ai]);
+            }
+            else
+            for(int i = 0; i<n; i++){
+              arr[count][i] = map.get(arr[count-1][i]);
+            }
+            map.clear();
+            for(int i = 0; i<n; i++){
+              map.put(arr[count][i], map.containsKey(arr[count][i])? map.get(arr[count][i])+1:1);
             }
 
-            for (int i = 0; i < n; i++) {
-              int key = list.get(i);
-              map.put(key, map.containsKey(key) ? map.get(key) + 1 : 1);
-              if (key == map.get(key))
-              count++;
-            }
+            times++;
+            count++;
           }
-          out.println(list.get(ai));
+
+          if(tempStep >= n){
+            System.out.println(arr[n-1][ai]);
+          }
+          else if(arr[tempStep][ai] != 0)
+            System.out.println(arr[tempStep][ai]);
+          else
+            System.out.println(arr[step+1][ai]);
         }
       //  map.forEach((key,val) -> out.println(key + " : " + val));
       }
