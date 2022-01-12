@@ -22,7 +22,7 @@ public class FastScanner {
       for (int i=0; i<n; i++) a[i]=nextInt();
       return a;
     }
-    byte nextByte(){return Byte.parseByte(next());}
+    public byte nextByte(){return Byte.parseByte(next());}
     long nextLong() {
       return Long.parseLong(next());
     }
