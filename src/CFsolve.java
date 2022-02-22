@@ -1,25 +1,28 @@
-
   import java.util.*;
   import java.io.*;
 
   public class CFsolve {
+
     public static void main(String[] args) {
       FastScanner input = new FastScanner();
       PrintWriter out = new PrintWriter(System.out);
-      byte n = input.nextByte();
-      byte t = input.nextByte();
 
-      StringBuilder str = new StringBuilder(input.next());
+      int n = input.nextInt();
+      HashMap<Integer, Integer> map = new HashMap<>();
 
-      while(t-- > 0){
-          for(int i = 0; i<n; i++){
-              if(i+1<n && str.substring(i,i+2).equals("BG")) {
-                  str.replace(i, i + 2, "GB");
-                  i++;
-              }
-          }
+      for(int i = 1;i<=n; i++)
+        map.put(input.nextInt(), i);
+
+      int m = input.nextInt();
+      long vasya = 0;
+      long petya = 0;
+
+      while(m-->0){
+        int temp = map.get(input.nextInt());
+        vasya += temp;
+        petya += n-temp+1;
       }
-      out.println(str);
+      out.println(vasya+" "+petya);
       out.close();
     }
 
