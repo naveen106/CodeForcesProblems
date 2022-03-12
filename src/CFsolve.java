@@ -2,27 +2,42 @@
   import java.io.*;
 
   public class CFsolve {
-
-    public static void main(String[] args) {
-      FastScanner input = new FastScanner();
-      PrintWriter out = new PrintWriter(System.out);
-
-      int n = input.nextInt();
-      HashMap<Integer, Integer> map = new HashMap<>();
-
-      for(int i = 1;i<=n; i++)
-        map.put(input.nextInt(), i);
-
-      int m = input.nextInt();
-      long vasya = 0;
-      long petya = 0;
-
-      while(m-->0){
-        int temp = map.get(input.nextInt());
-        vasya += temp;
-        petya += n-temp+1;
+    static PrintWriter out = new PrintWriter(System.out);
+  
+    static int[][] subsets(int input[]) {
+      return helper(0,input);
+    }
+  
+    private static int[][] helper(int startIndex, int[]input) {
+  
+      if (startIndex == input.length) {
+        //int arr = new int[0][0];
+        return new int[0][0];
       }
-      out.println(vasya+" "+petya);
+  
+      int[][] smallOutput = helper(startIndex + 1, input);
+      int[][] output = new int[smallOutput.length * 2][];
+      int start = 0;
+  
+      for (int i = 0; i < smallOutput.length; i++) {
+        output[start++] = smallOutput[i];
+      }
+  
+      for (int i = 0; i < smallOutput.length; i++) {
+        output[start] = new int[smallOutput[i].length+1];
+        output[start][0] = input[startIndex];
+        
+        for (int j = 0; j<smallOutput[i].length; j++) {
+          output[start][j+1] = smallOutput[i][j];
+        }
+        start++;
+      }
+  
+      return output;
+    }
+      public static void main(String[] args) {
+      FastScanner input = new FastScanner();
+  
       out.close();
     }
 
