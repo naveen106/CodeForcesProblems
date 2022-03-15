@@ -6,11 +6,59 @@ public class CFsolve {
   
   public static void main(String[] args) {
     FastScanner input = new FastScanner();
-    StringBuilder str = new StringBuilder(input.next());
-    StringBuilder temp = new StringBuilder(str);
+    int n = input.nextInt();
+    int[]arr = new int[n];
+  
+    for(int i = 0; i<n; i++){
+      arr[i]=input.nextInt();
+    }
+    int end = -1;
+    int start = -1;
+  
+    for(int i = n-1; i>=0; i--){
     
-    out.println(str.append(temp.reverse()));
+      if (end != -1 && arr[i] < arr[end]) {
+        start = i + 1;
+        break;
+      }
     
+      if (i-1>=0 && arr[i - 1] > arr[i]) {
+        if (end == -1)
+          end = i;
+      }
+    }
+  
+    //if array is completely decreasing
+    if(end > -1 && start == -1){
+      out.println( "yes\n"+arr[end] + " "+ arr[0]);
+      out.close();
+      return;
+    }
+    //if the array is already sorted
+    if(end == -1){
+      out.println("yes\n"+arr[0]+" "+arr[0]);
+      out.close();
+      return;
+    }
+    
+    for(int i = start; i<=end; i++){
+      swap(arr[start],arr[end]);
+    }
+  
+    boolean isSorted = true;
+  
+    for(int i = 1; i<n; i++ ){
+      if(arr[i] < arr[i-1]) {
+        out.println("no");
+        isSorted = false;
+        break;
+      }
+    }
+    if(isSorted){
+      out.println( "yes\n"+arr[start] + " "+ arr[end]);
+    }
+    else
+      out.println("no");
     out.close();
   }
   
