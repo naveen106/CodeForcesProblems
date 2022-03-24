@@ -8,57 +8,95 @@ public class CFsolve {
     FastScanner input = new FastScanner();
     int n = input.nextInt();
     int[]arr = new int[n];
-  
-    for(int i = 0; i<n; i++){
+    int start = 0;
+    
+    if(n==2){
+//      int temp = input.nextInt();
+//      int temp2 = input.nextInt();
+      if(input.nextInt() <= input.nextInt())
+        out.println("yes\n1 1");
+      else
+        out.println("yes\n1 2");
+      out.close();
+      return;
+    }
+    
+    for(int i = 0; i<n; i++)
       arr[i]=input.nextInt();
-    }
-    int end = -1;
-    int start = -1;
-  
-    for(int i = n-1; i>=0; i--){
     
-      if (end != -1 && arr[i] < arr[end]) {
-        start = i + 1;
+    
+    for(int i = 1; i<arr.length; i++){
+      if(arr[i-1] > arr[i]){
+        start = i-1;
         break;
       }
+    }
+    int end = 0;
     
-      if (i-1>=0 && arr[i - 1] > arr[i]) {
-        if (end == -1)
-          end = i;
+    for(int i = n-2; i>=start; i--){
+      if(arr[i] > arr[i+1]) {
+        end = i + 1;
+        break;
       }
     }
-  
-    //if array is completely decreasing
-    if(end > -1 && start == -1){
-      out.println( "yes\n"+arr[end] + " "+ arr[0]);
-      out.close();
-      return;
-    }
-    //if the array is already sorted
-    if(end == -1){
-      out.println("yes\n"+arr[0]+" "+arr[0]);
+
+    //Array is already sorted
+    if(start == 0 && end == 0){
+      out.println("yes\n" + "1 1");
       out.close();
       return;
     }
     
-    for(int i = start; i<=end; i++){
-      swap(arr[start],arr[end]);
-    }
-  
-    boolean isSorted = true;
-  
-    for(int i = 1; i<n; i++ ){
-      if(arr[i] < arr[i-1]) {
+    if(end-start == 1){
+      
+      if(end+1 < n && arr[start] < arr[end+1])
+      //out.println("yes\n" + end+1 +" "+ start+1);
+        out.println("yes\n" + ++start +" "+ ++end);
+      else
         out.println("no");
-        isSorted = false;
-        break;
+      out.close();
+      return;
+    }
+    
+    int s = 0;
+    int e=end;
+    if(end < arr.length-1)
+      e = end+1;
+    
+    if(start>0)
+    s=start-1;
+    
+    for(int i = end; i>=start; i--){
+      
+      if(start > 0 && end != arr.length-1){
+        
+        if(arr[i] < arr[s] || arr[i] > arr[e]){
+          out.println("no");
+          out.close();
+          return;
+        }
+        continue;
+      }
+      
+      if(end == arr.length-1 && start>0){
+        if(arr[i] > arr[start] || arr[i] < arr[s]){
+          out.println("no");
+          out.close();
+          return;
+        }
+        continue;
+      }
+      
+      if(arr[i] > arr[s] || arr[i] < arr[e]){
+        out.println("no");
+        out.close();
+        return;
       }
     }
-    if(isSorted){
-      out.println( "yes\n"+arr[start] + " "+ arr[end]);
-    }
-    else
-      out.println("no");
+    
+    //out.println("yes\n" + arr[end-1] +" "+ arr[start+1]);
+    //out.println("yes\n" + end+1 +" "+ start+1);
+    out.println("yes\n" + ++start +" "+ ++end);
     out.close();
   }
   
