@@ -2,17 +2,12 @@ import java.util.*;
 import java.io.*;
 
 public class CFsolve {
-  static PrintWriter out = new PrintWriter(System.out);
-  
   public static void main(String[] args) {
     FastScanner input = new FastScanner();
+    PrintWriter out = new PrintWriter(System.out);
     int n = input.nextInt();
-    int[]arr = new int[n];
-    int start = 0;
-    
+  
     if(n==2){
-//      int temp = input.nextInt();
-//      int temp2 = input.nextInt();
       if(input.nextInt() <= input.nextInt())
         out.println("yes\n1 1");
       else
@@ -20,83 +15,56 @@ public class CFsolve {
       out.close();
       return;
     }
+  
+    int[]arr = input.readArray(n);
     
-    for(int i = 0; i<n; i++)
-      arr[i]=input.nextInt();
-    
-    
-    for(int i = 1; i<arr.length; i++){
-      if(arr[i-1] > arr[i]){
-        start = i-1;
-        break;
-      }
+    if(n==1) {
+      out.println("yes\n 1 1");
+      out.close();
+      return;
     }
+    
+    int start = 0;
     int end = 0;
     
-    for(int i = n-2; i>=start; i--){
-      if(arr[i] > arr[i+1]) {
-        end = i + 1;
-        break;
-      }
+    for(int i = n-2; i>=0; i--){
+        
+        if(arr[i+1] < arr[i]) {
+          end = i + 1;
+          break;
+        }
     }
-
+    
+    for(int i = 1; i<n-1; i++){
+        
+        if(arr[i-1] > arr[i]) {
+          start = i - 1;
+          break;
+        }
+    }
+  
     //Array is already sorted
     if(start == 0 && end == 0){
       out.println("yes\n" + "1 1");
       out.close();
       return;
     }
-    
-    if(end-start == 1){
-      
-      if(end+1 < n && arr[start] < arr[end+1])
-      //out.println("yes\n" + end+1 +" "+ start+1);
-        out.println("yes\n" + ++start +" "+ ++end);
-      else
-        out.println("no");
-      out.close();
-      return;
-    }
-    
-    int s = 0;
-    int e=end;
-    if(end < arr.length-1)
-      e = end+1;
-    
-    if(start>0)
-    s=start-1;
-    
-    for(int i = end; i>=start; i--){
-      
-      if(start > 0 && end != arr.length-1){
-        
-        if(arr[i] < arr[s] || arr[i] > arr[e]){
-          out.println("no");
-          out.close();
-          return;
-        }
-        continue;
-      }
-      
-      if(end == arr.length-1 && start>0){
-        if(arr[i] > arr[start] || arr[i] < arr[s]){
-          out.println("no");
-          out.close();
-          return;
-        }
-        continue;
-      }
-      
-      if(arr[i] > arr[s] || arr[i] < arr[e]){
+
+    int s = start, e = end--;
+    while(end >= start){
+      if(arr[end+1] > arr[end--]) {
         out.println("no");
         out.close();
         return;
       }
     }
-    
-    //out.println("yes\n" + arr[end-1] +" "+ arr[start+1]);
-    //out.println("yes\n" + end+1 +" "+ start+1);
-    out.println("yes\n" + ++start +" "+ ++end);
+  
+    if(e+1 < n && arr[e+1] < arr[s])
+      out.println("no");
+    else if(s-1 >= 0 && arr[s-1] > arr[e])
+      out.println("no");
+    else
+    out.println("yes\n" + ++s +" "+ ++e);
     out.close();
   }
   
