@@ -5,69 +5,65 @@ public class CFsolve {
   public static void main(String[] args) {
     FastScanner input = new FastScanner();
     PrintWriter out = new PrintWriter(System.out);
+    
     int n = input.nextInt();
-  
-    if(n==2){
-      if(input.nextInt() <= input.nextInt())
-        out.println("yes\n1 1");
-      else
-        out.println("yes\n1 2");
-      out.close();
-      return;
-    }
-  
-    int[]arr = input.readArray(n);
+    int m = input.nextInt();
+    int k = input.nextInt();
+    int t = input.nextInt();
     
-    if(n==1) {
-      out.println("yes\n 1 1");
-      out.close();
-      return;
-    }
+    int[][] arr = new int[n][m];
     
-    int start = 0;
-    int end = 0;
-    
-    for(int i = n-2; i>=0; i--){
-        
-        if(arr[i+1] < arr[i]) {
-          end = i + 1;
-          break;
-        }
-    }
-    
-    for(int i = 1; i<n-1; i++){
-        
-        if(arr[i-1] > arr[i]) {
-          start = i - 1;
-          break;
-        }
-    }
-  
-    //Array is already sorted
-    if(start == 0 && end == 0){
-      out.println("yes\n" + "1 1");
-      out.close();
-      return;
-    }
-
-    int s = start, e = end--;
-    while(end >= start){
-      if(arr[end+1] > arr[end--]) {
-        out.println("no");
-        out.close();
-        return;
+//    for(int i = 0; i<k; i++){
+//      for(int j = 0; j<m; j++){
+//           input
+//      }
+//    }
+      for(int i = 0; i<k; i++) {
+        arr[input.nextInt()-1][input.nextInt()-1] = -1;
       }
-    }
+    
+      int count = 1;
+      
+      for(int i = 0; i<n; i++){
+        
+        for(int j = 0; j<m; j++){
   
-    if(e+1 < n && arr[e+1] < arr[s])
-      out.println("no");
-    else if(s-1 >= 0 && arr[s-1] > arr[e])
-      out.println("no");
-    else
-    out.println("yes\n" + ++s +" "+ ++e);
+          if(arr[i][j]!=-1) {
+  
+            if (count == 3) {
+              arr[i][j] = 3;
+              count = 1;
+            }
+  
+            if (count == 2) {
+              arr[i][j] = 2;
+              count++;
+            }
+  
+            if (count == 1) {
+              arr[i][j] = 1;
+              count++;
+            }
+          }
+        }
+      }
+      
+      for(int i = 0; i<t; i++){
+        int temp = arr[input.nextInt()-1][input.nextInt()-1];
+        if(temp==1)
+          out.println("Carrots");
+        if(temp==2)
+          out.println("Kiwis");
+        if(temp==3)
+          out.println("Grapes");
+        else
+          out.println("Waste");
+      }
+    
     out.close();
   }
   
+
   
   static int LCM(int a, int b){
     return a/gcd(a,b) * b;
