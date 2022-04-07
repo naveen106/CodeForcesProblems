@@ -2,68 +2,91 @@ import java.util.*;
 import java.io.*;
 
 public class CFsolve {
+  //this is done by someone else, will look into how it's done more carefully, looks like I got something new to learn again.
   public static void main(String[] args) {
     FastScanner input = new FastScanner();
     PrintWriter out = new PrintWriter(System.out);
     
-    int n = input.nextInt();
-    int m = input.nextInt();
-    int k = input.nextInt();
     int t = input.nextInt();
     
-    int[][] arr = new int[n][m];
-    
-//    for(int i = 0; i<k; i++){
-//      for(int j = 0; j<m; j++){
-//           input
-//      }
-//    }
-      for(int i = 0; i<k; i++) {
-        arr[input.nextInt()-1][input.nextInt()-1] = -1;
-      }
-    
-      int count = 1;
+    while(t-- > 0){
       
-      for(int i = 0; i<n; i++){
+      int n = input.nextInt();
+      int health = input.nextInt();
+      
+      int[]arr = input.readArray(n);
+  
+      if(n==1){
+        out.println(health);
+        out.close();
+        continue;
+      }
+      
+      
+      int left = 1, right = health;
+      int answer = 0;
+      
+      while(left <= right){
         
-        for(int j = 0; j<m; j++){
-  
-          if(arr[i][j]!=-1) {
-  
-            if (count == 3) {
-              arr[i][j] = 3;
-              count = 1;
-            }
-  
-            if (count == 2) {
-              arr[i][j] = 2;
-              count++;
-            }
-  
-            if (count == 1) {
-              arr[i][j] = 1;
-              count++;
-            }
-          }
+        int mid = left+(right-left)/2;
+        
+        if(isPossible(arr, mid, health)){
+          answer = mid;
+          right = mid-1;
         }
+        
+        else
+          left = mid+1;
       }
       
-      for(int i = 0; i<t; i++){
-        int temp = arr[input.nextInt()-1][input.nextInt()-1];
-        if(temp==1)
-          out.println("Carrots");
-        if(temp==2)
-          out.println("Kiwis");
-        if(temp==3)
-          out.println("Grapes");
-        else
-          out.println("Waste");
-      }
+     // int temp = answer;
+      
+      //System.out.println(temp);
+      System.out.println(answer);
+      
+    }
     
     out.close();
   }
   
+  
+  //k is damage dealt by dagger for k seconds
+  static boolean isPossible(int[] arr, int k, int healthLoss){
+    
+    for(int i = 0; i<arr.length; i++){
+      
+      if(i+1 < arr.length){
+       
+        int difference = arr[i+1]-arr[i];
+    /*
+        //we deal k amount of damage (in k seconds)
+        if(difference > k)
+          healthLoss-=k;
 
+        //else we deal 'difference' amount of damage
+        else
+            healthLoss-=difference;
+            
+     */
+        healthLoss-= Math.min(difference, k);
+        
+      }
+      //for last second.
+      else
+        healthLoss-=k;
+    }
+    
+    return healthLoss<=0;
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
   
   static int LCM(int a, int b){
     return a/gcd(a,b) * b;
