@@ -2,38 +2,33 @@ import java.util.*;
 import java.io.*;
 
 
-
 public class Tester {
   
-  static PrintWriter out = new PrintWriter(System.out);
   
-  public static int maxArea(int[] arr) {
+  
+  public static void main (String[] args) {
+  
+    int[]arr = {1,2,3,1};
+  
+    int left = 0;
+    int right = arr.length - 1;
+  
+    int mid = 0;
+  
+    while(left <= right){
     
-    int maxArea = 0;
-  
-  
-    int leftMost = 0;
-    int rightMost = arr.length-1;
-  
-  
-    while(leftMost < rightMost){
-      int vertEdge = Math.min(arr[leftMost],arr[rightMost]);
-      int width = leftMost-rightMost;
+      mid = left + (right-left)/2;
     
-      maxArea = Math.max(maxArea, vertEdge*width);
-    
-      if(arr[leftMost]<arr[rightMost])
-        leftMost++;
+      if(arr[mid+1] > arr[mid])
+        left = mid+1;
       else
-        rightMost--;
+        right = mid-1;
+    
     }
-  
-    return maxArea;
+    
+    System.out.println(mid);
+    
   }
   
-  public static void main(String[] args) {
-      int[]arr= {1,8,6,2,5,4,8,3,7};
-      System.out.println(maxArea(arr));
-   
-  }
+  
 }
