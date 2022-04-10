@@ -1,93 +1,53 @@
+import java.math.BigInteger;
 import java.util.*;
 import java.io.*;
 
 public class CFsolve {
-  //this is done by someone else, will look into how it's done more carefully, looks like I got something new to learn again.
+  
+  
+  static PrintWriter out = new PrintWriter(System.out);
   public static void main(String[] args) {
     FastScanner input = new FastScanner();
-    PrintWriter out = new PrintWriter(System.out);
-    
     int t = input.nextInt();
     
     while(t-- > 0){
-      
-      int n = input.nextInt();
-      int health = input.nextInt();
-      
-      int[]arr = input.readArray(n);
-  
-      if(n==1){
-        out.println(health);
-        out.close();
-        continue;
-      }
-      
-      
-      int left = 1, right = health;
-      int answer = 0;
-      
-      while(left <= right){
-        
-        int mid = left+(right-left)/2;
-        
-        if(isPossible(arr, mid, health)){
-          answer = mid;
-          right = mid-1;
-        }
-        
-        else
-          left = mid+1;
-      }
-      
-     // int temp = answer;
-      
-      //System.out.println(temp);
-      System.out.println(answer);
-      
-    }
     
+    }
     out.close();
   }
   
   
-  //k is damage dealt by dagger for k seconds
-  static boolean isPossible(int[] arr, int k, int healthLoss){
+  
+  static boolean sumIsGreaterThanMax(long max, long mid, int k){
     
-    for(int i = 0; i<arr.length; i++){
-      
-      if(i+1 < arr.length){
-       
-        int difference = arr[i+1]-arr[i];
-    /*
-        //we deal k amount of damage (in k seconds)
-        if(difference > k)
-          healthLoss-=k;
+    if(mid >= k){
+      /*
+      long Ksum = sum(k);
+      long tempSum = sum(2*k-1-mid);
+      long greaterThanKSum = (temp*(temp+1)/2);//(mid-1)*mid/2;
 
-        //else we deal 'difference' amount of damage
-        else
-            healthLoss-=difference;
-            
-     */
-        healthLoss-= Math.min(difference, k);
-        
-      }
-      //for last second.
-      else
-        healthLoss-=k;
+      totalSum = midSum + Ksum - greaterThanKSum;
+       */
+      
+      /* Positions:        1 2 3 4 5 6 7
+       * How? for example: 1 2 3 4 3 2 1, then total sum = sum(k) + sum(k-1);  // sumOf( 1 --> 4) + sumOf( 3 <-- 1 )
+       * if mid = 5 (position 5), then sum till position 5 = totalsum - sumOf(totalElements - mid)
+       * // and totalElements - mid == total numbers left on the right side (which is 2 here (7th and 6th position).
+       * // so we just subtract sum of totalElements left on the right side  from total sum to find the addition till 5th position.
+      */
+      long totalSum = sum(k)+sum(k-1)-sum((2L*k-1)-mid);
+      return totalSum >= max;
     }
     
-    return healthLoss<=0;
+    else //else mid is less than k, meaning
+    return sum(mid)>=max;
     
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
+  static long sum(long a){
+    return a*(a+1)/2;
+  }
+
   static int LCM(int a, int b){
     return a/gcd(a,b) * b;
   }
@@ -136,12 +96,7 @@ public class CFsolve {
     }
     return a;
   }
-  
-  static void swap(int a, int b){
-    a = a^b;
-    b = a^b;
-    a = a^b;
-  }
+ 
   
   static void sort(int[] a) {
     ArrayList<Integer> l=new ArrayList<>();
